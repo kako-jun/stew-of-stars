@@ -147,6 +147,48 @@ export interface ElementBalance {
   count: number
   status: 'excess' | 'balanced' | 'lacking' // 過多、バランス、不足
   interpretation: string
+  practicalAdvice?: string[] // 具体的な取り入れ方
+}
+
+/**
+ * 五行を日常生活で取り入れる具体的な方法
+ */
+const ELEMENT_PRACTICAL_ADVICE: Record<FiveElement, string[]> = {
+  木: [
+    '朝早く起きて、新しいことを始める',
+    '植物を育てたり、緑の多い場所で過ごす',
+    '読書や学習など、知識を増やす活動をする',
+    '柔軟体操やヨガで体をほぐす',
+    '新しいスキルや趣味に挑戦する',
+  ],
+  火: [
+    '人と積極的に交流し、コミュニケーションを増やす',
+    '運動やスポーツで体を動かす',
+    '明るい色（赤、オレンジ）の服や小物を取り入れる',
+    '情熱的に取り組める活動を見つける',
+    '太陽の光を浴びる時間を増やす',
+  ],
+  土: [
+    '規則正しい生活リズムを作る',
+    '整理整頓や掃除をこまめに行う',
+    '家庭菜園や料理など、土に触れる活動をする',
+    '黄色や茶色のアイテムを身につける',
+    'ルーティンワークを大切にする',
+  ],
+  金: [
+    '目標を明確に設定し、計画を立てる',
+    '不要なものを整理し、シンプルにする',
+    '金属製のアクセサリーや小物を持つ',
+    '決断力を必要とする活動に取り組む',
+    '白や銀色のものを取り入れる',
+  ],
+  水: [
+    '本を読んだり、学習の時間を増やす',
+    '柔軟な考え方を意識する',
+    '水辺を散歩したり、入浴時間を大切にする',
+    '黒や青色のアイテムを身につける',
+    '流れに身を任せる経験をする',
+  ],
 }
 
 /**
@@ -162,6 +204,7 @@ export function analyzeElementBalance(
     const count = elementCounts[element]
     let status: 'excess' | 'balanced' | 'lacking'
     let interpretation: string
+    let practicalAdvice: string[] | undefined
 
     if (count >= average * 1.5) {
       status = 'excess'
@@ -169,6 +212,8 @@ export function analyzeElementBalance(
     } else if (count <= average * 0.5) {
       status = 'lacking'
       interpretation = getLackingInterpretation(element)
+      // 不足している要素には具体的な取り入れ方を提示
+      practicalAdvice = ELEMENT_PRACTICAL_ADVICE[element]
     } else {
       status = 'balanced'
       interpretation = getBalancedInterpretation(element)
@@ -179,6 +224,7 @@ export function analyzeElementBalance(
       count,
       status,
       interpretation,
+      practicalAdvice,
     }
   })
 }
