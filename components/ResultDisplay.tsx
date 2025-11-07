@@ -106,9 +106,16 @@ export default function ResultDisplay({ birthData, fourPillars, onReset }: Resul
           <h2 className="mb-6 text-center text-3xl font-bold text-purple-700 dark:text-purple-300">
             五行の分布 (Five Elements)
           </h2>
+          <p className="mb-4 text-center text-sm text-purple-600 dark:text-purple-400">
+            💡 各要素をクリックすると詳細が表示されます
+          </p>
           <div className="grid grid-cols-5 gap-4">
             {FIVE_ELEMENTS.map((element) => (
-              <div key={element} className="text-center">
+              <button
+                key={element}
+                onClick={() => handleElementClick(element)}
+                className="cursor-pointer rounded-lg p-2 text-center transition-all hover:scale-105 hover:bg-purple-100 dark:hover:bg-purple-900/30"
+              >
                 <div className="mb-2 text-5xl">{elementEmojis[element]}</div>
                 <div className="text-lg font-semibold text-purple-800 dark:text-purple-200">
                   {element}
@@ -116,7 +123,7 @@ export default function ResultDisplay({ birthData, fourPillars, onReset }: Resul
                 <div className="text-3xl font-bold text-purple-600 dark:text-purple-400">
                   {elementCounts[element]}
                 </div>
-              </div>
+              </button>
             ))}
           </div>
         </div>
