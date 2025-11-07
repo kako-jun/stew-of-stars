@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #faf5ff;
+  --foreground: #1f1729;
+  --accent-purple: #9333ea;
+  --accent-pink: #ec4899;
+  --accent-gold: #fbbf24;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0f0820;
+    --foreground: #f3e8ff;
+    --accent-purple: #a855f7;
+    --accent-pink: #f472b6;
+    --accent-gold: #fcd34d;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family:
+    'Segoe UI',
+    Tahoma,
+    Geneva,
+    Verdana,
+    sans-serif;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .mystic-gradient {
+    background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-pink) 100%);
+  }
+
+  .mystic-gradient-reverse {
+    background: linear-gradient(135deg, var(--accent-pink) 0%, var(--accent-purple) 100%);
+  }
+
+  .stardust-bg {
+    background-image: radial-gradient(2px 2px at 20% 30%, white, transparent),
+      radial-gradient(2px 2px at 60% 70%, white, transparent),
+      radial-gradient(1px 1px at 50% 50%, white, transparent),
+      radial-gradient(1px 1px at 80% 10%, white, transparent),
+      radial-gradient(2px 2px at 90% 60%, white, transparent),
+      radial-gradient(1px 1px at 33% 85%, white, transparent),
+      radial-gradient(1px 1px at 15% 70%, white, transparent);
+    background-size: 200% 200%;
+    animation: stardust-move 20s ease-in-out infinite;
+  }
+}
+
+@keyframes stardust-move {
+  0%,
+  100% {
+    background-position:
+      0% 0%,
+      100% 100%,
+      50% 50%,
+      0% 100%,
+      100% 0%,
+      25% 75%,
+      75% 25%;
+  }
+  50% {
+    background-position:
+      100% 100%,
+      0% 0%,
+      25% 75%,
+      75% 25%,
+      50% 50%,
+      60% 40%,
+      40% 60%;
+  }
+}
