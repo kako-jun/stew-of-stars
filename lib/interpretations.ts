@@ -151,7 +151,7 @@ export interface ElementBalance {
 }
 
 /**
- * 五行を日常生活で取り入れる具体的な方法
+ * 五行を日常生活で取り入れる具体的な方法（不足している場合）
  */
 const ELEMENT_PRACTICAL_ADVICE: Record<FiveElement, string[]> = {
   木: [
@@ -192,6 +192,47 @@ const ELEMENT_PRACTICAL_ADVICE: Record<FiveElement, string[]> = {
 }
 
 /**
+ * 五行のバランスを取る具体的な方法（過多の場合）
+ */
+const ELEMENT_BALANCE_ADVICE: Record<FiveElement, string[]> = {
+  木: [
+    '時には立ち止まり、現状を受け入れる時間を持つ',
+    '完璧を求めすぎず、リラックスする',
+    '他人の意見に耳を傾け、柔軟に対応する',
+    '頑張りすぎないよう、適度な休息を取る',
+    '金属製のアイテムを取り入れて、バランスを整える',
+  ],
+  火: [
+    '静かな時間を作り、瞑想や深呼吸をする',
+    '落ち着いた活動（読書、手芸など）を楽しむ',
+    '寒色系（青、水色）の服や小物を取り入れる',
+    '一人でゆっくり過ごす時間を大切にする',
+    '夜は早めに休み、十分な睡眠を取る',
+  ],
+  土: [
+    '新しい場所に出かけ、変化を楽しむ',
+    '計画にとらわれず、自由な時間を作る',
+    '軽やかな運動（散歩、ダンスなど）をする',
+    '固定観念を手放し、柔軟な考え方を意識する',
+    '緑や青のアイテムで風通しの良さを取り入れる',
+  ],
+  金: [
+    '感情を素直に表現する機会を作る',
+    '芸術や音楽など、感性を刺激する活動をする',
+    '温かみのある色（赤、オレンジ、ピンク）を取り入れる',
+    '人の話に共感し、柔らかい対応を心がける',
+    '完璧主義を手放し、過程を楽しむ',
+  ],
+  水: [
+    '具体的な行動計画を立て、実行する',
+    '決断を先延ばしにせず、思い切って選ぶ',
+    '体を動かす活動で、エネルギーを発散する',
+    '明るい色（黄色、赤）のアイテムを身につける',
+    '一つのことに集中して、やり遂げる経験をする',
+  ],
+}
+
+/**
  * 五行のバランスを分析
  */
 export function analyzeElementBalance(
@@ -209,6 +250,8 @@ export function analyzeElementBalance(
     if (count >= average * 1.5) {
       status = 'excess'
       interpretation = getExcessInterpretation(element)
+      // 過多の要素には具体的なバランスの取り方を提示
+      practicalAdvice = ELEMENT_BALANCE_ADVICE[element]
     } else if (count <= average * 0.5) {
       status = 'lacking'
       interpretation = getLackingInterpretation(element)
