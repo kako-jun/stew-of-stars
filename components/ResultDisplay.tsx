@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import type { BirthData, FourPillars, FiveElement } from '@/lib/shichuu-suimei'
 import {
   stemBranchToString,
@@ -10,6 +11,7 @@ import {
 import { analyzePersonality } from '@/lib/interpretations'
 import ElementRadarChart from './ElementRadarChart'
 import ShareButtons from './ShareButtons'
+import ElementDetailModal from './ElementDetailModal'
 
 interface ResultDisplayProps {
   birthData: BirthData
@@ -18,6 +20,9 @@ interface ResultDisplayProps {
 }
 
 export default function ResultDisplay({ birthData, fourPillars, onReset }: ResultDisplayProps) {
+  const [selectedElement, setSelectedElement] = useState<FiveElement | null>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
   // 五行の分布を計算
   const elementCounts: Record<FiveElement, number> = {
     木: 0,
@@ -38,6 +43,26 @@ export default function ResultDisplay({ birthData, fourPillars, onReset }: Resul
 
   // 性格分析を実行
   const personality = analyzePersonality(fourPillars, elementCounts)
+
+  // 五行バランスをマップに変換して検索しやすくする
+  const elementBalanceMap = personality.elementBalance.reduce(
+    (acc, balance) => {
+      acc[balance.element] = balance
+      return acc
+    },
+    {} as Record<FiveElement, (typeof personality.elementBalance)[0]>
+  )
+
+  // 要素クリック時の処理
+  const handleElementClick = (element: FiveElement) => {
+    setSelectedElement(element)
+    setIsModalOpen(true)
+  }
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false)
+    setSelectedElement(null)
+  }
 
   // 五行の絵文字マッピング
   const elementEmojis: Record<string, string> = {
@@ -101,7 +126,7 @@ export default function ResultDisplay({ birthData, fourPillars, onReset }: Resul
           <h2 className="text-center text-3xl font-bold text-purple-700 dark:text-purple-300">
             📊 五行バランスチャート
           </h2>
-          <ElementRadarChart elementCounts={elementCounts} />
+          <ElementRadarChart elementCounts={elementCounts} onElementClick={handleElementClick} />
         </div>
 
         {/* あなたの本質（日干） */}
@@ -133,60 +158,6 @@ export default function ResultDisplay({ birthData, fourPillars, onReset }: Resul
           </div>
         </div>
 
-        {/* 五行バランスの解釈 */}
-        <div className="rounded-2xl bg-white/90 p-8 shadow-2xl backdrop-blur-sm dark:bg-purple-950/70">
-          <h2 className="mb-6 text-center text-3xl font-bold text-purple-700 dark:text-purple-300">
-            🔮 五行バランスの解釈
-          </h2>
-          <div className="space-y-4">
-            {personality.elementBalance.map((balance) => {
-              if (balance.status === 'balanced') return null
-              return (
-                <div
-                  key={balance.element}
-                  className="rounded-lg border-2 border-purple-200 bg-purple-50 p-4 dark:border-purple-700 dark:bg-purple-900/30"
-                >
-                  <div className="mb-2 flex items-center gap-2">
-                    <span className="text-3xl">{elementEmojis[balance.element]}</span>
-                    <span className="text-xl font-bold text-purple-800 dark:text-purple-200">
-                      {balance.element}
-                    </span>
-                    <span
-                      className={`ml-auto rounded-full px-3 py-1 text-sm font-semibold ${
-                        balance.status === 'excess'
-                          ? 'bg-orange-200 text-orange-800 dark:bg-orange-900 dark:text-orange-200'
-                          : 'bg-blue-200 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
-                      }`}
-                    >
-                      {balance.status === 'excess' ? '過多' : '不足'}
-                    </span>
-                  </div>
-                  <p className="mb-3 text-purple-700 dark:text-purple-300">
-                    {balance.interpretation}
-                  </p>
-
-                  {/* 具体的なアドバイス（不足・過多の要素） */}
-                  {balance.practicalAdvice && balance.practicalAdvice.length > 0 && (
-                    <div className="mt-3 rounded-lg bg-white/50 p-3 dark:bg-purple-900/50">
-                      <p className="mb-2 text-sm font-bold text-purple-800 dark:text-purple-200">
-                        {balance.status === 'lacking' ? '💡 具体的な取り入れ方：' : '💡 具体的なバランスの取り方：'}
-                      </p>
-                      <ul className="space-y-1 text-sm text-purple-700 dark:text-purple-300">
-                        {balance.practicalAdvice.map((advice, index) => (
-                          <li key={index} className="flex items-start">
-                            <span className="mr-2">•</span>
-                            <span>{advice}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                </div>
-              )
-            })}
-          </div>
-        </div>
-
         {/* 総合アドバイス */}
         <div className="mystic-gradient rounded-2xl p-8 text-white shadow-2xl">
           <h2 className="mb-4 text-center text-3xl font-bold">💫 総合アドバイス</h2>
@@ -208,6 +179,13 @@ export default function ResultDisplay({ birthData, fourPillars, onReset }: Resul
           </button>
         </div>
       </div>
+
+      {/* 要素詳細モーダル */}
+      <ElementDetailModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        balance={selectedElement ? elementBalanceMap[selectedElement] : null}
+      />
     </div>
   )
 }
