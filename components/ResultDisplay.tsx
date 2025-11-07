@@ -8,6 +8,8 @@ import {
   FIVE_ELEMENTS,
 } from '@/lib/shichuu-suimei'
 import { analyzePersonality } from '@/lib/interpretations'
+import ElementRadarChart from './ElementRadarChart'
+import ShareButtons from './ShareButtons'
 
 interface ResultDisplayProps {
   birthData: BirthData
@@ -92,6 +94,14 @@ export default function ResultDisplay({ birthData, fourPillars, onReset }: Resul
               </div>
             ))}
           </div>
+        </div>
+
+        {/* 五行バランスのレーダーチャート */}
+        <div className="space-y-4">
+          <h2 className="text-center text-3xl font-bold text-purple-700 dark:text-purple-300">
+            📊 五行バランスチャート
+          </h2>
+          <ElementRadarChart elementCounts={elementCounts} />
         </div>
 
         {/* あなたの本質（日干） */}
@@ -184,6 +194,9 @@ export default function ResultDisplay({ birthData, fourPillars, onReset }: Resul
             {personality.overallAdvice}
           </p>
         </div>
+
+        {/* シェアボタン */}
+        <ShareButtons birthData={birthData} />
 
         {/* リセットボタン */}
         <div className="text-center">
