@@ -9,6 +9,7 @@ import {
 } from '@/lib/shichuu-suimei'
 import { analyzePersonality } from '@/lib/interpretations'
 import ElementRadarChart from './ElementRadarChart'
+import ShareButtons from './ShareButtons'
 
 interface ResultDisplayProps {
   birthData: BirthData
@@ -193,6 +194,9 @@ export default function ResultDisplay({ birthData, fourPillars, onReset }: Resul
             {personality.overallAdvice}
           </p>
         </div>
+
+        {/* シェアボタン */}
+        <ShareButtons birthData={birthData} />
 
         {/* リセットボタン */}
         <div className="text-center">
