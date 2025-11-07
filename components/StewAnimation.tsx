@@ -41,10 +41,10 @@ export default function StewAnimation({ onComplete }: StewAnimationProps) {
   }, [])
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center p-8">
-      <div className="relative">
+    <div className="stardust-bg flex min-h-screen flex-col items-center justify-center p-8">
+      <div className="flex flex-col items-center">
         {/* シチュー鍋 */}
-        <div className="relative">
+        <div className="relative flex items-center justify-center">
           <div className="text-9xl">🍲</div>
 
           {/* 湯気 */}
