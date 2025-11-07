@@ -39,10 +39,16 @@ export default function BirthDateForm({ onSubmit }: BirthDateFormProps) {
     parseInt(day) <= 31
 
   return (
-    <form onSubmit={handleSubmit} className="w-full max-w-md space-y-6">
+    <form
+      onSubmit={handleSubmit}
+      className="w-full max-w-md space-y-6 rounded-2xl bg-white/80 p-8 shadow-2xl backdrop-blur-sm dark:bg-purple-950/50"
+    >
       <div className="space-y-4">
         <div>
-          <label htmlFor="year" className="mb-2 block text-sm font-medium">
+          <label
+            htmlFor="year"
+            className="mb-2 block text-sm font-semibold text-purple-700 dark:text-purple-300"
+          >
             生年 / Year
           </label>
           <input
@@ -52,14 +58,17 @@ export default function BirthDateForm({ onSubmit }: BirthDateFormProps) {
             max={currentYear}
             value={year}
             onChange={(e) => setYear(e.target.value)}
-            className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+            className="w-full rounded-lg border-2 border-purple-200 bg-white px-4 py-2 text-gray-900 transition-all focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-300 dark:border-purple-700 dark:bg-purple-900/50 dark:text-white dark:focus:border-purple-400 dark:focus:ring-purple-600"
             placeholder="1990"
             required
           />
         </div>
 
         <div>
-          <label htmlFor="month" className="mb-2 block text-sm font-medium">
+          <label
+            htmlFor="month"
+            className="mb-2 block text-sm font-semibold text-purple-700 dark:text-purple-300"
+          >
             生月 / Month
           </label>
           <input
@@ -69,14 +78,17 @@ export default function BirthDateForm({ onSubmit }: BirthDateFormProps) {
             max="12"
             value={month}
             onChange={(e) => setMonth(e.target.value)}
-            className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+            className="w-full rounded-lg border-2 border-purple-200 bg-white px-4 py-2 text-gray-900 transition-all focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-300 dark:border-purple-700 dark:bg-purple-900/50 dark:text-white dark:focus:border-purple-400 dark:focus:ring-purple-600"
             placeholder="1-12"
             required
           />
         </div>
 
         <div>
-          <label htmlFor="day" className="mb-2 block text-sm font-medium">
+          <label
+            htmlFor="day"
+            className="mb-2 block text-sm font-semibold text-purple-700 dark:text-purple-300"
+          >
             生日 / Day
           </label>
           <input
@@ -86,14 +98,17 @@ export default function BirthDateForm({ onSubmit }: BirthDateFormProps) {
             max="31"
             value={day}
             onChange={(e) => setDay(e.target.value)}
-            className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+            className="w-full rounded-lg border-2 border-purple-200 bg-white px-4 py-2 text-gray-900 transition-all focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-300 dark:border-purple-700 dark:bg-purple-900/50 dark:text-white dark:focus:border-purple-400 dark:focus:ring-purple-600"
             placeholder="1-31"
             required
           />
         </div>
 
         <div>
-          <label htmlFor="hour" className="mb-2 block text-sm font-medium">
+          <label
+            htmlFor="hour"
+            className="mb-2 block text-sm font-semibold text-purple-700 dark:text-purple-300"
+          >
             生時 / Hour (optional)
           </label>
           <input
@@ -103,10 +118,10 @@ export default function BirthDateForm({ onSubmit }: BirthDateFormProps) {
             max="23"
             value={hour}
             onChange={(e) => setHour(e.target.value)}
-            className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+            className="w-full rounded-lg border-2 border-purple-200 bg-white px-4 py-2 text-gray-900 transition-all focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-300 dark:border-purple-700 dark:bg-purple-900/50 dark:text-white dark:focus:border-purple-400 dark:focus:ring-purple-600"
             placeholder="0-23 (12 = noon)"
           />
-          <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+          <p className="mt-1 text-xs text-purple-600 dark:text-purple-400">
             不明な場合は12（正午）のままで構いません
           </p>
         </div>
@@ -115,7 +130,7 @@ export default function BirthDateForm({ onSubmit }: BirthDateFormProps) {
       <button
         type="submit"
         disabled={!isValid}
-        className="w-full rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 px-6 py-3 font-semibold text-white transition-all hover:from-purple-600 hover:to-pink-600 disabled:cursor-not-allowed disabled:opacity-50"
+        className="mystic-gradient w-full rounded-lg px-6 py-3 font-bold text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
       >
         🍲 煮込む / Start Cooking
       </button>

@@ -89,11 +89,24 @@ export function branchToElement(branch: EarthlyBranch): FiveElement {
 /**
  * 年の干支を計算（西暦から）
  * 基準: 1924年が甲子（干支の最初）
+ *
+ * 注意: 四柱推命では年の切り替わりは立春（2月4日頃）です。
+ * この実装では簡易的に2月4日を基準としていますが、
+ * 厳密には節入り時刻（太陽黄経315度）を考慮する必要があります。
  */
-export function getYearStemBranch(year: number): StemBranch {
+export function getYearStemBranch(year: number, month?: number, day?: number): StemBranch {
+  let adjustedYear = year
+
+  // 立春前（1月または2月3日以前）の場合は前年扱い
+  if (month !== undefined && day !== undefined) {
+    if (month === 1 || (month === 2 && day <= 3)) {
+      adjustedYear = year - 1
+    }
+  }
+
   // 1924年が甲子の年（干支サイクルの開始）
   const baseYear = 1924
-  const yearOffset = year - baseYear
+  const yearOffset = adjustedYear - baseYear
 
   const stemIndex = yearOffset % 10
   const branchIndex = yearOffset % 12
@@ -107,25 +120,29 @@ export function getYearStemBranch(year: number): StemBranch {
 /**
  * 月の干支を計算
  * 月柱の地支は固定、天干は年の天干から計算
+ *
+ * 注意: 四柱推命では月の切り替わりも節入り日（二十四節気）が基準です。
+ * この実装では簡易的に新暦の月をそのまま使用していますが、
+ * 厳密には立春、啓蟄、清明などの節入り日を考慮する必要があります。
  */
-export function getMonthStemBranch(year: number, month: number): StemBranch {
-  // 月の地支は固定（旧暦基準だが、ここでは新暦で簡略化）
+export function getMonthStemBranch(year: number, month: number, day?: number): StemBranch {
+  // 月の地支は固定（節入り日基準だが、ここでは新暦で簡略化）
   const monthBranches: EarthlyBranch[] = [
-    '寅', // 1月
-    '卯', // 2月
-    '辰', // 3月
-    '巳', // 4月
-    '午', // 5月
-    '未', // 6月
-    '申', // 7月
-    '酉', // 8月
-    '戌', // 9月
-    '亥', // 10月
-    '子', // 11月
-    '丑', // 12月
+    '寅', // 1月（立春～啓蟄前）
+    '卯', // 2月（啓蟄～清明前）
+    '辰', // 3月（清明～立夏前）
+    '巳', // 4月（立夏～芒種前）
+    '午', // 5月（芒種～小暑前）
+    '未', // 6月（小暑～立秋前）
+    '申', // 7月（立秋～白露前）
+    '酉', // 8月（白露～寒露前）
+    '戌', // 9月（寒露～立冬前）
+    '亥', // 10月（立冬～大雪前）
+    '子', // 11月（大雪～小寒前）
+    '丑', // 12月（小寒～立春前）
   ]
 
-  const yearStem = getYearStemBranch(year).stem
+  const yearStem = getYearStemBranch(year, month, day).stem
   const yearStemIndex = HEAVENLY_STEMS.indexOf(yearStem)
 
   // 月の天干を計算（年の天干に基づく）
@@ -205,11 +222,16 @@ export function getHourStemBranch(year: number, month: number, day: number, hour
 
 /**
  * 四柱推命を計算
+ *
+ * 注意: この実装は簡易版です。正確な四柱推命では以下を考慮する必要があります：
+ * - 年柱: 立春（2月4日頃）の節入り時刻
+ * - 月柱: 各月の節入り日（二十四節気）と節入り時刻
+ * - 日柱・時柱: 出生地の経度による真太陽時の調整
  */
 export function calculateFourPillars(birthData: BirthData): FourPillars {
   return {
-    year: getYearStemBranch(birthData.year),
-    month: getMonthStemBranch(birthData.year, birthData.month),
+    year: getYearStemBranch(birthData.year, birthData.month, birthData.day),
+    month: getMonthStemBranch(birthData.year, birthData.month, birthData.day),
     day: getDayStemBranch(birthData.year, birthData.month, birthData.day),
     hour: getHourStemBranch(birthData.year, birthData.month, birthData.day, birthData.hour),
   }

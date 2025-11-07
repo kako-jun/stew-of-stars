@@ -39,14 +39,20 @@ export default function Home() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-8">
+    <main className="stardust-bg flex min-h-screen flex-col items-center justify-center p-8">
       <div className="text-center">
-        <h1 className="mb-4 text-6xl font-bold">🍲 Stew of Stars</h1>
-        <p className="mb-2 text-xl">四柱推命 | 八字命学 | Four Pillars of Destiny</p>
-        <p className="mb-8 text-lg text-gray-600 dark:text-gray-400">
+        <h1 className="mb-4 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-6xl font-bold text-transparent drop-shadow-lg dark:from-purple-400 dark:to-pink-400">
+          🍲 Stew of Stars
+        </h1>
+        <p className="mb-2 text-xl font-semibold text-purple-700 dark:text-purple-300">
+          四柱推命 | 八字命学 | Four Pillars of Destiny
+        </p>
+        <p className="mb-8 text-lg font-medium text-purple-600 dark:text-purple-400">
           A cosmic blend of destiny and elements
         </p>
-        <p className="mb-8 text-sm text-gray-500">Your fate, slow-cooked in the stars...</p>
+        <p className="mb-8 text-sm italic text-purple-500 dark:text-purple-300">
+          Your fate, slow-cooked in the stars...
+        </p>
 
         <BirthDateForm onSubmit={handleSubmit} />
       </div>

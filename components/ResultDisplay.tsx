@@ -43,17 +43,21 @@ export default function ResultDisplay({ birthData, fourPillars, onReset }: Resul
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center p-8">
+    <div className="stardust-bg flex min-h-screen flex-col items-center justify-center p-8">
       <div className="w-full max-w-4xl space-y-8">
         {/* タイトル */}
         <div className="text-center">
-          <h1 className="mb-2 text-5xl font-bold">✨ あなたの命式 ✨</h1>
-          <p className="text-lg text-gray-600 dark:text-gray-400">Your Four Pillars</p>
+          <h1 className="mb-2 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-5xl font-bold text-transparent drop-shadow-lg dark:from-purple-400 dark:to-pink-400">
+            ✨ あなたの命式 ✨
+          </h1>
+          <p className="text-lg font-semibold text-purple-700 dark:text-purple-300">
+            Your Four Pillars
+          </p>
         </div>
 
         {/* 生年月日情報 */}
-        <div className="rounded-lg bg-gradient-to-r from-purple-100 to-pink-100 p-6 text-center dark:from-purple-900 dark:to-pink-900">
-          <p className="text-xl font-semibold">
+        <div className="mystic-gradient rounded-2xl p-6 text-center shadow-xl">
+          <p className="text-2xl font-bold text-white">
             {birthData.year}年 {birthData.month}月 {birthData.day}日 {birthData.hour}時
           </p>
         </div>
@@ -67,13 +71,17 @@ export default function ResultDisplay({ birthData, fourPillars, onReset }: Resul
         </div>
 
         {/* 五行の分布 */}
-        <div className="rounded-lg bg-white p-6 shadow-lg dark:bg-gray-800">
-          <h2 className="mb-4 text-center text-2xl font-bold">五行の分布 (Five Elements)</h2>
+        <div className="rounded-2xl bg-white/90 p-8 shadow-2xl backdrop-blur-sm dark:bg-purple-950/70">
+          <h2 className="mb-6 text-center text-3xl font-bold text-purple-700 dark:text-purple-300">
+            五行の分布 (Five Elements)
+          </h2>
           <div className="grid grid-cols-5 gap-4">
             {FIVE_ELEMENTS.map((element) => (
               <div key={element} className="text-center">
                 <div className="mb-2 text-5xl">{elementEmojis[element]}</div>
-                <div className="text-lg font-semibold">{element}</div>
+                <div className="text-lg font-semibold text-purple-800 dark:text-purple-200">
+                  {element}
+                </div>
                 <div className="text-3xl font-bold text-purple-600 dark:text-purple-400">
                   {elementCounts[element]}
                 </div>
@@ -86,7 +94,7 @@ export default function ResultDisplay({ birthData, fourPillars, onReset }: Resul
         <div className="text-center">
           <button
             onClick={onReset}
-            className="rounded-lg bg-gradient-to-r from-blue-500 to-cyan-500 px-8 py-3 font-semibold text-white transition-all hover:from-blue-600 hover:to-cyan-600"
+            className="mystic-gradient-reverse rounded-lg px-8 py-3 font-bold text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl"
           >
             🔄 もう一度占う / Try Again
           </button>
@@ -110,10 +118,10 @@ function PillarCard({ title, pillar }: { title: string; pillar: FourPillars['yea
   }
 
   return (
-    <div className="rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 p-6 text-white shadow-lg">
-      <div className="mb-2 text-center text-sm font-semibold">{title}</div>
+    <div className="mystic-gradient rounded-2xl p-6 text-white shadow-xl transition-all hover:scale-105">
+      <div className="mb-2 text-center text-sm font-bold uppercase tracking-wide">{title}</div>
       <div className="mb-3 text-center text-5xl font-bold">{stemBranchToString(pillar)}</div>
-      <div className="flex justify-around text-2xl">
+      <div className="flex justify-around text-3xl">
         <div title={`天干: ${stemElement}`}>{elementEmojis[stemElement]}</div>
         <div title={`地支: ${branchElement}`}>{elementEmojis[branchElement]}</div>
       </div>
