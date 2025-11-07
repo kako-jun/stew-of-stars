@@ -151,7 +151,26 @@ export default function ResultDisplay({ birthData, fourPillars, onReset }: Resul
                       {balance.status === 'excess' ? '過多' : '不足'}
                     </span>
                   </div>
-                  <p className="text-purple-700 dark:text-purple-300">{balance.interpretation}</p>
+                  <p className="mb-3 text-purple-700 dark:text-purple-300">
+                    {balance.interpretation}
+                  </p>
+
+                  {/* 具体的な取り入れ方（不足している要素のみ） */}
+                  {balance.practicalAdvice && balance.practicalAdvice.length > 0 && (
+                    <div className="mt-3 rounded-lg bg-white/50 p-3 dark:bg-purple-900/50">
+                      <p className="mb-2 text-sm font-bold text-purple-800 dark:text-purple-200">
+                        💡 具体的な取り入れ方：
+                      </p>
+                      <ul className="space-y-1 text-sm text-purple-700 dark:text-purple-300">
+                        {balance.practicalAdvice.map((advice, index) => (
+                          <li key={index} className="flex items-start">
+                            <span className="mr-2">•</span>
+                            <span>{advice}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </div>
               )
             })}
