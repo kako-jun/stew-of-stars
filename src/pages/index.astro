@@ -1,0 +1,82 @@
+---
+import Home from '../components/Home'
+import '../styles/global.css'
+
+const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://stew-of-stars.llll-ll.com'
+const siteName = 'Stew of Stars'
+const description =
+  '四柱推命（八字命学）であなたの運命を占います。生年月日から五行のバランスを分析し、性格や人生のアドバイスを提供。A cosmic blend of destiny and elements - Four Pillars of Destiny fortune-telling.'
+const keywords = [
+  '四柱推命',
+  '八字命学',
+  '占い',
+  'fortune telling',
+  'Four Pillars of Destiny',
+  '五行',
+  'five elements',
+  '干支',
+  '天干地支',
+  '運命',
+  'destiny',
+  '無料占い',
+].join(', ')
+
+const title = `${siteName} | 四柱推命で運命を占う`
+const ogImage = `${siteUrl}/og-image.png`
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: siteName,
+  description,
+  url: siteUrl,
+  applicationCategory: 'LifestyleApplication',
+  operatingSystem: 'Any',
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'JPY',
+  },
+  inLanguage: ['ja', 'en'],
+}
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
+    <meta name="author" content={siteName} />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <link rel="canonical" href={siteUrl} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta property="og:locale:alternate" content="en_US" />
+    <meta property="og:url" content={siteUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={siteName} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:creator" content="@kako_jun_42" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <Home client:load />
+  </body>
+</html>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://stew-of-stars.llll-ll.com/sitemap-index.xml
